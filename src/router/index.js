@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import Register from '../views/Register.vue'
 import Login from '../views/Login.vue'
 import Me from '../views/Me.vue'
+import Task from '../views/Task.vue'
 
 const routes = [
   {
@@ -26,7 +27,13 @@ const routes = [
     path: '/me',
     name: 'Me',
     component: Me
+  },
+  {
+    path: '/tasks',
+    name: 'Task',
+    component: Task
   }
+
 
 ]
 

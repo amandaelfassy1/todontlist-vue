@@ -1,3 +1,4 @@
+
 export const user = (state) => {
     return state.user
 }
@@ -8,4 +9,8 @@ export const auth = (state) => {
 
 export const data = (state) => {
     return state.user.data
+}
+
+export const tasks = (state) => {
+    return state.tasks
 }
