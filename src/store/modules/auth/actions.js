@@ -26,11 +26,11 @@ export const login = ({ commit }, form) => {
             commit('data', user)
 
        }).catch((error) => {
-            console.log(error.response.data.message)
-            return{
-                error: error.response.data.message
-            }
-
+        Toastify({
+            text: error.response.data.message,
+            backgroundColor: "#c0392b",
+            className: "error",
+        }).showToast();
        }); 
 }
 
@@ -78,17 +78,11 @@ export const register = ({ commit }, form) => {
         commit('data', user)
     }).catch((error) => {
         
-        alert(error.response.data)
-
-        console.log(error.response.data)
-        return{
-            alert :
-            {
-                success: false,
-                danger: true,
-                message: error.response.data
-            }
-        }
+        Toastify({
+            text: error.response.data.message,
+            backgroundColor: "#c0392b",
+            className: "error",
+        }).showToast();
     }); 
 }
 
@@ -127,14 +121,19 @@ export const createTask =({commit}, data) =>{
                 body: response.data.body,
             }
             commit('data', task)
+            
+            Toastify({
+                text: response.data.message,
+                backgroundColor: "#1FDF70",
+                className: "error",
+              }).showToast();
 
         }).catch((error) => {
             console.log(error.response.data.message)
             Toastify({
-                text: "This is a toast",
-                backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
-                className: "info",
-                message: error.response.data.message
+                text: error.response.data.message,
+                backgroundColor: "#c0392b",
+                className: "error",
               }).showToast();
         }); 
 }
@@ -150,13 +149,17 @@ export const updateTask =({ commit},id, form ) =>{
             
             console.log(response);
             commit('tasks', response.data.tasks)
+            Toastify({
+                text: response.data.message,
+                backgroundColor: "#1FDF70",
+                className: "error",
+              }).showToast();
 
         }).catch((error) => {
             Toastify({
-                text: "This is a toast",
-                backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
-                className: "info",
-                message: error.response.data.message
+                text: error.response.data.message,
+                backgroundColor: "#c0392b",
+                className: "error",
             }).showToast();
         }); 
 }
@@ -178,11 +181,17 @@ export const listTask =({commit}) =>{
 }
 
 export const deleteTask =({commit}, id) =>{
-    axios.get(
-        `http://127.0.0.1:8000/api/auth/delete/${id}`        
+    axios.delete(
+        `http://127.0.0.1:8000/api/tasks/${id}`        
         ).then((response) => {
             console.log(response);
             commit('tasks', response.data.tasks)
+            Toastify({
+                text: response.data.message,
+                backgroundColor: "#1FDF70",
+                className: "error",
+              }).showToast();
+
         }).catch((error) => {
             console.log(error.response.data.message)
             Toastify({

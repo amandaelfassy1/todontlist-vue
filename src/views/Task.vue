@@ -105,9 +105,11 @@
                 this.getTask = this.getTask.filter((note) => {
                     return id !== note.id;
                 });
+                this.$store.dispatch('auth/deleteTask', id)
+                this.$store.dispatch('auth/listTask')
                 localStorage.setItem("notes", JSON.stringify(this.getTask));
             },
-            
+
             updateNote(note) {
                 console.log(note)
                 note.editor = false;
@@ -124,7 +126,6 @@
 
         mounted(){
             this.$store.dispatch('auth/listTask')
-            // this.$store.dispatch('auth/deleteTask')
         }
 };
 </script>
