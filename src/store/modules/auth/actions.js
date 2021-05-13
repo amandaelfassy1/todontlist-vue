@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Toastify from 'toastify-js'
 
 export const login = ({ commit }, form) => {
     axios.post(
@@ -26,10 +27,10 @@ export const login = ({ commit }, form) => {
 
        }).catch((error) => {
             console.log(error.response.data.message)
-            alert(error)
             return{
-                message: error.response.data.message
+                error: error.response.data.message
             }
+
        }); 
 }
 
@@ -113,13 +114,9 @@ export const logout = ({ commit, state }) => {
         commit('data', {});
 }
 
-export const create =({ commit, form }) =>{
+export const createTask =({commit}, data) =>{
     axios.post(
-        'http://127.0.0.1:8000/api/auth/create',
-        {
-            body: form.body,
-        }
-        
+        'http://127.0.0.1:8000/api/tasks', data
         ).then((response) => {
             
             console.log(response);
@@ -129,65 +126,70 @@ export const create =({ commit, form }) =>{
             const task = {
                 body: response.data.body,
             }
-        
             commit('data', task)
 
         }).catch((error) => {
             console.log(error.response.data.message)
-            alert(error)
-            return{
-                    message: error.response.data.message
-            }
+            Toastify({
+                text: "This is a toast",
+                backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+                className: "info",
+                message: error.response.data.message
+              }).showToast();
         }); 
-
 }
 
-export const update =({ commit, form }) =>{
+export const updateTask =({ commit},id, form ) =>{
     axios.post(
-        'http://127.0.0.1:8000/api/auth/create',
+        `http://127.0.0.1:8000/tasks/${id}`,
         {
             body: form.body,
-            done: form.done
+            done : form.done
         }
-        
-        ).then((response) => {
-            
-            console.log(response);
-
-            commit('token', response.data.token)
-            
-            const task = {
-                body: response.data.body,
-                done: response.data.done,
-            }
-        
-            commit('data', task)
-
-        }).catch((error) => {
-            console.log(error.response.data.message)
-            alert(error)
-            return{
-                    message: error.response.data.message
-            }
-        }); 
-}
-
-
-export const listTask =({commit}) =>{
-    axios.get(
-        'http://127.0.0.1:8000/api/auth/tasks'
-        
         ).then((response) => {
             
             console.log(response);
             commit('tasks', response.data.tasks)
 
         }).catch((error) => {
-            console.log(error.response.data.message)
-            alert(error)
-            return{
-                    message: error.response.data.message
-            }
+            Toastify({
+                text: "This is a toast",
+                backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+                className: "info",
+                message: error.response.data.message
+            }).showToast();
         }); 
-        
 }
+
+export const listTask =({commit}) =>{
+    axios.get(
+        'http://127.0.0.1:8000/api/auth/tasks'
+        ).then((response) => {
+            console.log(response);
+            commit('tasks', response.data.tasks)
+        }).catch((error) => {
+            console.log(error.response.data.message)
+            Toastify({
+                text: error.response.data.message,
+                backgroundColor: "#c0392b",
+                className: "error",
+              }).showToast();
+        }); 
+}
+
+export const deleteTask =({commit}, id) =>{
+    axios.get(
+        `http://127.0.0.1:8000/api/auth/delete/${id}`        
+        ).then((response) => {
+            console.log(response);
+            commit('tasks', response.data.tasks)
+        }).catch((error) => {
+            console.log(error.response.data.message)
+            Toastify({
+                text: error.response.data.message,
+                backgroundColor: "#c0392b",
+                className: "error",
+              }).showToast();
+        }); 
+}
+

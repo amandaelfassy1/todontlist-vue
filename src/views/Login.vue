@@ -10,7 +10,7 @@
                 <label for="exampleInputPassword1" class="form-label">Password</label>
                 <input type="password" id="password" name="password" v-model="form.password" class="inp form-control">
             </div>
-            <button  type="submit" class=" btn btn-primary btn-lg btn-block">Se connecter</button>
+            <button  type="submit" class=" btn btn-primary btn-lg btn-block"> Se connecter</button>
         </form>
     </div>
 </template>
@@ -19,6 +19,7 @@
     import { mapActions } from "vuex"
 
     export default {
+
         name: "Login",
         data() {
             return {

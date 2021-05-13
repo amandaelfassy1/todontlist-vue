@@ -1,15 +1,21 @@
 <template>
     <div class="p-5 container">
-       <form  @submit.prevent="addNote" >
-        <div class="form-group text-center">
-            <label for="exampleFormControlInput1">Ecrivez la tâche à ne pas faire !</label>
-            <input type="text" v-model="note" class="form-control" @keydown.enter="addNote" id="task" placeholder="">
-        </div>
-         <button type="submit" class="btn btn-primary">Ajouter</button>
-       </form>
+       
        <br>
-        <br>
-            <ul class="list-group mt-3">
+        <p class="text-center text-muted mt-5" v-if="!getTask.length">Pas de notes ! Connectez-vous pour faire votre To don't list !</p>
+            <div v-else>
+                <form  @submit.prevent="addNote" >
+                    <div class="form-group text-center">
+                        <label>Ecrivez la tâche à ne pas faire !</label>
+                        <input type="text" v-model="note" class="form-control" @keydown.enter="addNote" id="task" placeholder="">
+                    </div>
+                    <br>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                    </div>
+                </form>
+                <br>
+                <ul class="list-group mt-3">
                     <li v-for="currentNote in getTask" :key="currentNote.id" class="list-group-item d-flex justify-content-between align-items-center">
                         <div class="input">
                             <p  v-on:dblclick="startEdit(currentNote)" v-if="!currentNote.editor">{{currentNote.body.substr(0, 30)}} {{currentNote.body.length > 30 ? "..." : ""}}</p>
@@ -17,8 +23,11 @@
                         </div>
                         <button @click.prevent="updateNote(currentNote.id)" type="button" class="btn"><i class="far fa-edit text-primary"></i></button>
                         <button @click.prevent="deleteNote(currentNote.id)" type="button" class="btn"><i class="far fa-trash-alt text-danger"></i></button>
+                        <button @click.prevent="updateNote(currentNote.id)" type="button" class="btn"><i class="far fa-check-square"></i></button>
+            
                     </li>
-            </ul>
+                </ul>
+            </div>
         <!-- <table class="table">
             <tbody>
                 <tr>
@@ -73,27 +82,39 @@
                 }
                 const note = {
                     id: Date.now(),
-                    content: this.note,
-                    editor: false,
+                    created_at: Date.now(),
+                    updated_at: Date.now(),
+                    body: this.note,
+                    done: false,
+                    user:{
+                        id: 6
+                    }
                 };
+                
+                console.log(note)
+                this.$store.dispatch('auth/createTask', note)
+                this.$store.dispatch('auth/listTask')
+                console.log(this.$store)
                 this.note = "";
                 this.notes.unshift(note);
                 localStorage.setItem("notes", JSON.stringify(this.notes));
             },
+
+
             deleteNote(id) {
-                this.notes = this.notes.filter((note) => {
+                this.getTask = this.getTask.filter((note) => {
                     return id !== note.id;
                 });
-                localStorage.setItem("notes", JSON.stringify(this.notes));
+                localStorage.setItem("notes", JSON.stringify(this.getTask));
             },
+            
             updateNote(note) {
+                console.log(note)
                 note.editor = false;
-                this.notes[note.id]=note;
+                this.getTask[note.id]=note;
                 localStorage.setItem("notes", JSON.stringify(this.notes));
-               
             },
         },
-
         computed:{
             getTask(){
                 console.log(this.$store.state.auth.tasks)
@@ -103,6 +124,7 @@
 
         mounted(){
             this.$store.dispatch('auth/listTask')
+            // this.$store.dispatch('auth/deleteTask')
         }
 };
 </script>
