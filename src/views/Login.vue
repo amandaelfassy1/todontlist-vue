@@ -10,6 +10,7 @@
                 <label for="exampleInputPassword1" class="form-label">Password</label>
                 <input type="password" id="password" name="password" v-model="form.password" class="inp form-control">
             </div>
+            <!-- <button  @click="goToTasks()" type="submit" class=" btn btn-primary btn-lg btn-block"> Se connecter</button> -->
             <button  type="submit" class=" btn btn-primary btn-lg btn-block"> Se connecter</button>
         </form>
     </div>
@@ -27,7 +28,9 @@
             };
         },
         methods: {
-            ...mapActions({'login': 'auth/login'})
+            ...mapActions({'login': 'auth/login'}),
+          
+            
         } 
     }
 </script>
