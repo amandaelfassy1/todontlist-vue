@@ -43,32 +43,22 @@ export const login = ({ commit }, form) => {
        }); 
 }
 
-export const me = ({commit}, state)=>{
-    const token = state.user.token;
-    if(!token){
-        return;
-    }
-    axios 
-    .get(
-        `http://127.0.0.1:8000/api/auth/me`, 
-        // { 
-        //     headers :{
-        //         'Authorization' :`Bearer ${token}`
-        //     }
-        // }
+export const user = ({commit})=>{
+    console.log('TEST')
+    axios.get(
+        `http://127.0.0.1:8000/api/auth/me`
     )
     .then((response)=>{
-        const user = {
-            name: response.data.name,
-            email: response.data.email,
-            created_at: response.data.created_at
-        }
-        commit('data', user)
-        console.log(response)
+        // const user = {
+        //     name: response.data.name,
+        //     email: response.data.email,
+        //     created_at: response.data.created_at
+        // }
+        console.log(response.data)
+        commit('user', response.data.user)
     }).catch((error)=>{
     console.log(error)
   })
-    
 }
 
 export const register = ({ commit }, form) => {
@@ -172,20 +162,19 @@ export const updateTask =({ commit}, data ) =>{
     axios.put(
         `http://127.0.0.1:8000/api/tasks/${data.id}`, Object.assign({}, data)
 
-
         ).then((response) => {
             
-            console.log(response);
-
             commit('token', response.data.token)
             
             const task = {
                 body: response.data.body,
                 done: response.data.done,
             }
-            commit('data', task)
             
-            console.log(response);
+            commit('data', task)
+
+            // window.localStorage.setItem(task.done)
+
             Toastify({
                 text: response.data.message,
                 backgroundColor: "#1FDF70",
@@ -205,7 +194,7 @@ export const listTask =({commit}) =>{
     axios.get(
         'http://127.0.0.1:8000/api/auth/tasks'
         ).then((response) => {
-            console.log(response);
+            // console.log(response);
             commit('tasks', response.data.tasks)
         }).catch((error) => {
             console.log(error.response.data.message)

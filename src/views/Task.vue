@@ -3,7 +3,7 @@
        <br>
         <form  @submit.prevent="addNote" >
             <div class="form-group text-center">
-                <label>Ecrivez la tâche à ne pas faire !</label>
+                <label>Notez la tâche à ne pas faire !</label>
                 <input type="text" v-model="note" class="form-control" @keydown.enter="addNote" id="task" placeholder="">
             </div>
             <br>
@@ -14,6 +14,9 @@
         <br>
         <p class="text-center text-muted mt-5" v-if="!getTask.length">Pas de notes ! </p>
         <div v-else>
+            <p class="text-center">Double click pour voir et modifier votre note ! Appuyez sur entrée pour enregistrer les modifications !</p>
+            <p class="text-center">Cochez une fois que la tâche est finie</p>
+
             <ul class="list-group mt-3">
                 <li v-for="currentNote in getTask" :key="currentNote.id" class="list-group-item d-flex justify-content-between align-items-center">
                     <div class="form-check">
@@ -48,7 +51,6 @@
 
             addNote(event) {
                 event.preventDefault()
-                console.log(this.note)
                 if (!this.note) {
                     return;
                 }
@@ -63,7 +65,6 @@
                     }
                 };
                 
-                console.log(note)
                 this.$store.dispatch('auth/createTask', note)
                 this.$store.dispatch('auth/listTask')
                 console.log(this.$store)
@@ -85,14 +86,12 @@
             },
 
             updateNote(note) {
-                console.log(note)
                 note.editor = false;
                 this.$store.dispatch('auth/updateTask', note)
             },
         },
         computed:{
             getTask(){
-                console.log(this.$store.state.auth.tasks)
                 return this.$store.state.auth.tasks
             }
         },

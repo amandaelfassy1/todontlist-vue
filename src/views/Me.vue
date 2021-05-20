@@ -1,27 +1,32 @@
 <template>
   <div>
     <h1>Me</h1>
-
-    <div v-if="user">
-      <ul><li>{{user.name}}</li></ul>
-    <pre><code>{{ user }}</code></pre>
+    <div v-for="user in getUser" :key="user.id">
+        <h1>{{user.name}}</h1>
+        <h1>{{user.email}}</h1>
     </div>
-    <div v-else>Not logged.</div>
+    <div>Not logged.</div>
   </div>
 </template>
 
 <script>
-    import { mapGetters } from "vuex"
-
-    export default {
-  methods: {
-  },
-        name: "Me",
-        data() {
-            return {};
+// import { mapGetters } from "vuex"
+export default {
+    name: "Me",
+    data() {
+        return {};
+    },
+    computed: {
+        // ...mapGetters({'user': 'auth/user'}),
+        
+        getUser(){
+            console.log(this.$store.state.auth)
+            return this.$store.state.auth.user
         },
-        computed: {
-            ...mapGetters({'me': 'auth/me'})
-        }
-    }
+    },
+    mounted(){
+        console.log('test')
+        this.$store.dispatch('auth/me')
+    }    
+}
 </script>
