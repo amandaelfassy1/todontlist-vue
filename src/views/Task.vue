@@ -17,10 +17,10 @@
             <ul class="list-group mt-3">
                 <li v-for="currentNote in getTask" :key="currentNote.id" class="list-group-item d-flex justify-content-between align-items-center">
                     <div class="form-check">
-                        <input @click.prevent="updateNote(currentNote.id)" class="form-check-input" v-model="currentNote.done" type="checkbox" value="" id="flexCheckDefault">
+                        <input @change="updateNote(currentNote)" class="form-check-input" v-model="currentNote.done" type="checkbox" value="" id="flexCheckDefault">
                     </div>
                     <div class="input">
-                        <p  v-on:dblclick="startEdit(currentNote)" v-if="!currentNote.editor">{{currentNote.body.substr(0, 30)}} {{currentNote.body.length > 30 ? "..." : ""}}</p>
+                        <p :class="[currentNote.done ? 'completed':'', 'itemText']" v-on:dblclick="startEdit(currentNote)" v-if="!currentNote.editor">{{currentNote.body.substr(0, 30)}} {{currentNote.body.length > 30 ? "..." : ""}}</p>
                         <textarea  v-else rows="7" cols="133" class="form-control border-0 rounded-0 js-edit" v-model="currentNote.body" @keydown.enter.exact.prevent @keyup.enter.exact="updateNote(currentNote)" ></textarea>
                     </div>
                     <button @click.prevent="deleteNote(currentNote.id)" type="button" class="btn"><i class="far fa-trash-alt text-danger"></i></button>
@@ -102,3 +102,13 @@
         }
 };
 </script>
+
+<style scoped>
+.completed{
+    text-decoration: line-through;
+    color: black;
+}
+.itemText{
+    width: 100%;
+}
+</style>
