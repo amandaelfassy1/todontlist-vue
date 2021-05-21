@@ -13,7 +13,7 @@ export const login = ({ commit }, form) => {
           
             console.log(response);
             const token = response.data.token.split("|")[1]
-            console.log(token)
+            // console.log(token)
 
             axios.defaults.headers["Authorization"] = "Bearer " + token;
             window.localStorage.setItem("token", token)
@@ -43,19 +43,18 @@ export const login = ({ commit }, form) => {
        }); 
 }
 
-export const user = ({commit})=>{
-    console.log('TEST')
-    axios.get(
+export const me = ({commit})=>{
+    axios.post(
         `http://127.0.0.1:8000/api/auth/me`
     )
     .then((response)=>{
-        // const user = {
-        //     name: response.data.name,
-        //     email: response.data.email,
-        //     created_at: response.data.created_at
-        // }
-        console.log(response.data)
-        commit('user', response.data.user)
+        const user = {
+            name: response.data.name,
+            email: response.data.email,
+            created_at: response.data.created_at
+        }
+        // console.log(user)
+        commit('user', user)
     }).catch((error)=>{
     console.log(error)
   })
