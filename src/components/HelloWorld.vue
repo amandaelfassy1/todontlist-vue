@@ -2,12 +2,12 @@
   <div class="container text-center pt-5">
         <div class="row">
             <div class="col">
-                <img class="cake" src="../../public/accueil.png" alt="">
+                <img class="cake" src="../../public/accueil.jpg" alt="">
             </div>
-            <div class="col">
-                <h1 class="text-primary">To Don't List !</h1>
+            <div class="col pt-5">
+                <h1 class="pt-3 text-primary">To Don't List !</h1>
                 <h4>
-                  Connecte-toi, <br>et fais ta ToDon'tList !<br> Toutes tes tâches à ne <br>surtout pas faire ! 
+                  Connecte-toi, <br>et crée ta ToDon'tList !<br> Toutes tes tâches à ne <br>surtout pas faire ! 
                 </h4>
             </div>
     </div>
@@ -40,7 +40,7 @@ a {
   color: #42b983;
 }
 img{
-  width: 70%;
+  width: 75%;
 }
 h1{
   font-size: 60px;
