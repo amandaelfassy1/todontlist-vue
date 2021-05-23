@@ -96,35 +96,25 @@ export const register = ({ commit }, form) => {
 
 
 
-export const logout = ({ commit, state }) => {
-    const token = state.user.token;
-        if (!token) {
-            return;
-        }
+export const logout = ({ commit}) => {
+    axios.post('http://127.0.0.1:8000/api/auth/logout')
+      .then((response) => {
+        console.log(response);
+        // window.localStorage.removeItem("token", token)
 
-        axios.post(
-        'http://127.0.0.1:8000/api/auth/logout', {}, {
-            headers: {
-            'Authorization': `Bearer ${token}` 
-        }
-        }).then((response) => {
-            console.log(response);
-            
-            window.localStorage.removeItem("token", token)
-
-            // window.location.href = "/";
-            Toastify({
-                text: "vous êtes bien déconnecté",
-                backgroundColor: "#c0392b",
-                className: "error",
-            }).showToast();
+        window.location.href = "/";
+        Toastify({
+            text: response.data.message,
+            backgroundColor: "#c0392b",
+            className: "error",
+        }).showToast();
 
 
-        }).catch((error) => {
-            console.log(error)
-        }); 
-        commit('token', null);
-        commit('data', {});
+    }).catch((error) => {
+        console.log(error)
+    }); 
+    commit('token', null);
+    commit('data', {});
 }
 
 export const createTask =({commit}, data) =>{
@@ -158,11 +148,11 @@ export const createTask =({commit}, data) =>{
 }
 
 export const updateTask =({ commit}, data ) =>{
+
     axios.put(
         `http://127.0.0.1:8000/api/tasks/${data.id}`, Object.assign({}, data)
 
         ).then((response) => {
-            
             commit('token', response.data.token)
             
             const task = {

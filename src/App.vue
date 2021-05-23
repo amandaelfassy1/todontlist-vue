@@ -12,7 +12,7 @@
     <li class="nav-item">
       <a class="nav-link" href="/me">Me</a>
     </li>
-    <li v-if="user" class="nav-item">
+    <li  class="nav-item">
       <router-link class="nav-link" to="/tasks">Tasks</router-link>
     </li>
     <li class="nav-item">
@@ -24,7 +24,6 @@
 
 <script>
 import { mapActions } from "vuex";
-import { mapGetters } from "vuex"
 
 export default {
   methods: {
@@ -33,9 +32,6 @@ export default {
    data() {
             return {};
         },
-        computed: {
-            ...mapGetters({'user': 'auth/user'})
-        }
 };
 
 </script>

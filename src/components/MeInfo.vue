@@ -1,5 +1,5 @@
 <template>
-  <div class="container text-center pt-5">
+  <div>
     <div v-if="user">
         <table class="table">
             <tbody>
