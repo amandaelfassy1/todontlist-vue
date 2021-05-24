@@ -3,7 +3,7 @@ import Toastify from 'toastify-js'
 
 export const login = ({ commit }, form) => {
     axios.post(
-        'http://127.0.0.1:8000/api/auth/login',
+        `${process.env.VUE_APP_TODONTLIST}api/auth/login`,
         {
             email: form.email,
             password: form.password,
@@ -45,7 +45,7 @@ export const login = ({ commit }, form) => {
 
 export const me = ({commit})=>{
     axios.post(
-        `http://127.0.0.1:8000/api/auth/me`
+        `${process.env.VUE_APP_TODONTLIST}api/auth/me`
     )
     .then((response)=>{
         const user = {
@@ -63,7 +63,7 @@ export const me = ({commit})=>{
 export const register = ({ commit }, form) => {
    console.log(form)
     axios.post(
-     'http://127.0.0.1:8000/api/auth/register',
+     `${process.env.VUE_APP_TODONTLIST}api/auth/register`,
      {
          name: form.name,
          email: form.email,
@@ -97,7 +97,7 @@ export const register = ({ commit }, form) => {
 
 
 export const logout = ({ commit}) => {
-    axios.post('http://127.0.0.1:8000/api/auth/logout')
+    axios.post(`${process.env.VUE_APP_TODONTLIST}api/auth/logout`)
       .then((response) => {
         console.log(response);
         // window.localStorage.removeItem("token", token)
@@ -119,7 +119,7 @@ export const logout = ({ commit}) => {
 
 export const createTask =({commit}, data) =>{
     axios.post(
-        'http://127.0.0.1:8000/api/tasks', data
+        `${process.env.VUE_APP_TODONTLIST}api/tasks`, data
         ).then((response) => {
             
             console.log(response);
@@ -150,7 +150,7 @@ export const createTask =({commit}, data) =>{
 export const updateTask =({ commit}, data ) =>{
 
     axios.put(
-        `http://127.0.0.1:8000/api/tasks/${data.id}`, Object.assign({}, data)
+        `${process.env.VUE_APP_TODONTLIST}api/tasks/${data.id}`, Object.assign({}, data)
 
         ).then((response) => {
             commit('token', response.data.token)
@@ -181,7 +181,7 @@ export const updateTask =({ commit}, data ) =>{
 
 export const listTask =({commit}) =>{
     axios.get(
-        'http://127.0.0.1:8000/api/auth/tasks'
+        `${process.env.VUE_APP_TODONTLIST}api/auth/tasks`
         ).then((response) => {
             // console.log(response);
             commit('tasks', response.data.tasks)
@@ -197,7 +197,7 @@ export const listTask =({commit}) =>{
 
 export const deleteTask =({commit}, id) =>{
     axios.delete(
-        `http://127.0.0.1:8000/api/tasks/${id}`        
+        `${process.env.VUE_APP_TODONTLIST}api/tasks/${id}`        
         ).then((response) => {
             console.log(response);
             commit('tasks', response.data.tasks)
